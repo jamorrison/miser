@@ -35,10 +35,12 @@ sesamizeGEO <- function(subjects=NULL, frags=1:3, annot=FALSE, HDF5=FALSE,
     res <- sesamize(subjects, ...)
   } else { 
     samps <- getSamps(subjects=subjects, frags=frags)
+    samps[,1] <- as.character(samps[,1])
+    samps[,2] <- as.character(samps[,2])
     message("Testing annotations on the first few IDATs...") 
     stopifnot(testIDATs(samps, frags)) 
     message("Reading IDATs into a temporary RedGreenChannelSet...") 
-    rgSet <- getRGChannelSet(subjects=subjects, frags=frags)
+    rgSet <- getRGChannelSet(subjects=subjects, frags=frags, samps=samps)
     message("Sesamizing...") 
     res <- sesamize(rgSet, ...)
   }
