@@ -8,11 +8,13 @@
 #' A better-er idea would probably involve running the IDATs individually and
 #' then bolting them all together into an HDF5-backed grSet at the last instant.
 #' 
-#' @param   subjects  the names of each subject, or an rgSet (autodetect)
-#' @param   frags     which elements to extract for the array Basename (1:3)
-#' @param   annot     look up the titles and characteristics for GSMs? (FALSE)
-#' @param   HDF5      EXPERIMENTAL: make the grSet HDF5-backed? (FALSE)
-#' @param   cachePath where to cache the GEOmetadb sqlite file (tempdir())
+#' @param   subjects    the names of each subject, or an rgSet (autodetect)
+#' @param   frags       which elements to extract for the array Basename (1:3)
+#' @param   annot       look up the titles and characteristics for GSMs? (FALSE)
+#' @param   HDF5        EXPERIMENTAL: make the grSet HDF5-backed? (FALSE)
+#' @param   cachePath   where to cache the GEOmetadb sqlite file (tempdir())
+#' @param   force       Parse IDAT files with different array size, see the man page ?read.metharray (FALSE)
+#' @param   check.frags check if frags covers all elements up to "idat.gz" (FALSE)
 #' @param   ...       more arguments to pass on to sesamize
 #'
 #' @return            a GenomicRatioSet with metadata(grSet)$SNPs filled out
@@ -23,7 +25,7 @@
 #' 
 #' @export 
 sesamizeGEO <- function(subjects=NULL, frags=1:3, annot=FALSE, HDF5=FALSE, 
-                        cachePath=NULL, ...){
+                        cachePath=NULL, force=FALSE, check.frags=FALSE, ...){
 
   # baby steps towards out-of-core processing
   if (HDF5) setRealizationBackend("HDF5Array") 
@@ -34,13 +36,13 @@ sesamizeGEO <- function(subjects=NULL, frags=1:3, annot=FALSE, HDF5=FALSE,
     message("Sesamizing...") 
     res <- sesamize(subjects, ...)
   } else { 
-    samps <- getSamps(subjects=subjects, frags=frags)
+    samps <- getSamps(subjects=subjects, frags=frags, check.frags=check.frags)
     samps[,1] <- as.character(samps[,1])
     samps[,2] <- as.character(samps[,2])
     message("Testing annotations on the first few IDATs...") 
     stopifnot(testIDATs(samps, frags)) 
     message("Reading IDATs into a temporary RedGreenChannelSet...") 
-    rgSet <- getRGChannelSet(subjects=subjects, frags=frags, samps=samps)
+    rgSet <- getRGChannelSet(subjects=subjects, frags=frags, samps=samps, force=force)
     message("Sesamizing...") 
     res <- sesamize(rgSet, ...)
   }
