@@ -5,7 +5,8 @@
 \title{sesamize a bunch of IDATs from GEO (or anywhere else with sensible names)}
 \usage{
 sesamizeGEO(subjects = NULL, frags = 1:3, annot = FALSE,
-  HDF5 = FALSE, cachePath = NULL, ...)
+  HDF5 = FALSE, cachePath = NULL, force = FALSE,
+  check.frags = FALSE, ...)
 }
 \arguments{
 \item{subjects}{the names of each subject, or an rgSet (autodetect)}
@@ -17,6 +18,10 @@ sesamizeGEO(subjects = NULL, frags = 1:3, annot = FALSE,
 \item{HDF5}{EXPERIMENTAL: make the grSet HDF5-backed? (FALSE)}
 
 \item{cachePath}{where to cache the GEOmetadb sqlite file (tempdir())}
+
+\item{force}{Parse IDAT files with different array size, see the man page ?read.metharray (FALSE)}
+
+\item{check.frags}{check if frags covers all elements up to "idat.gz" (FALSE)}
 
 \item{...}{more arguments to pass on to sesamize}
 }

@@ -4,12 +4,14 @@
 \alias{getSamps}
 \title{helper function to read in samples and Basename columns}
 \usage{
-getSamps(subjects = NULL, frags = 1:3)
+getSamps(subjects = NULL, frags = 1:3, check.frags = FALSE)
 }
 \arguments{
 \item{subjects}{the names of each subject, or NULL to autodetect (NULL)}
 
 \item{frags}{which elements to extract for the array Basename (1:3)}
+
+\item{check.frags}{check if frags covers all elements up to "idat.gz" (FALSE)}
 }
 \value{
 \preformatted{       a data.frame

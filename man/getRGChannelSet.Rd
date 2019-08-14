@@ -4,7 +4,8 @@
 \alias{getRGChannelSet}
 \title{assemble a suitable RGChannelSet for sesamizing}
 \usage{
-getRGChannelSet(subjects = NULL, frags = 1:3, samps = NULL)
+getRGChannelSet(subjects = NULL, frags = 1:3, samps = NULL,
+  force = FALSE)
 }
 \arguments{
 \item{subjects}{the names of each subject, or NULL to autodetect (NULL)}
@@ -12,6 +13,8 @@ getRGChannelSet(subjects = NULL, frags = 1:3, samps = NULL)
 \item{frags}{which elements to extract for the array Basename (1:3)}
 
 \item{samps}{targets data.frame (overrides subjects and frags) (NULL)}
+
+\item{force}{Parse IDAT files with different array size, see the man page ?read.metharray (FALSE)}
 }
 \value{
 \preformatted{       an RGChannelSet with pData $subject and $Basename filled 
