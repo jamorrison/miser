@@ -2,23 +2,27 @@
 % Please edit documentation in R/getRGChannelSet.R
 \name{getRGChannelSet}
 \alias{getRGChannelSet}
-\title{assemble a suitable RGChannelSet for sesamizing}
+\title{Assemble a suitable RGChannelSet for sesamizing}
 \usage{
 getRGChannelSet(subjects = NULL, frags = 1:3, samps = NULL,
-  force = FALSE)
+  rightType = NULL, force = FALSE)
 }
 \arguments{
-\item{subjects}{the names of each subject, or NULL to autodetect (NULL)}
+\item{subjects}{The names of each subject, or NULL to autodetect
+(DEFAULT: NULL)}
 
-\item{frags}{which elements to extract for the array Basename (1:3)}
+\item{frags}{Which elements to extract for the array Basename (DEFAULT: 1:3)}
 
-\item{samps}{targets data.frame (overrides subjects and frags) (NULL)}
+\item{samps}{Targets data.frame - overrides subjects and frags
+(DEFAULT: NULL)}
 
-\item{force}{Parse IDAT files with different array size, see the man page ?read.metharray (FALSE)}
+\item{rightType}{"Correct" array type, tries to guess is NULL (DEFAULT: NULL)}
+
+\item{force}{Parse IDAT files with different array size,
+see the man page ?read.metharray (DEFAULT: FALSE)}
 }
 \value{
-\preformatted{       an RGChannelSet with pData $subject and $Basename filled 
-}
+An RGChannelSet with pData $subject and $Basename filled
 }
 \description{
 Note: this should probably go away in favor of signalSet parallel processing

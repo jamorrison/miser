@@ -2,32 +2,35 @@
 % Please edit documentation in R/sesamizeGEO.R
 \name{sesamizeGEO}
 \alias{sesamizeGEO}
-\title{sesamize a bunch of IDATs from GEO (or anywhere else with sensible names)}
+\title{Sesamize a bunch of IDATs from GEO (or anywhere else with sensible names)}
 \usage{
-sesamizeGEO(subjects = NULL, frags = 1:3, annot = FALSE,
-  HDF5 = FALSE, cachePath = NULL, force = FALSE,
+sesamizeGEO(subjects, frags = 1:3, annot = FALSE, HDF5 = FALSE,
+  cachePath = NULL, rightType = NULL, force = FALSE,
   check.frags = FALSE, ...)
 }
 \arguments{
-\item{subjects}{the names of each subject, or an rgSet (autodetect)}
+\item{subjects}{The names of each subject, or an rgSet}
 
-\item{frags}{which elements to extract for the array Basename (1:3)}
+\item{frags}{Which elements to extract for the array Basename (DEFAULT: 1:3)}
 
-\item{annot}{look up the titles and characteristics for GSMs? (FALSE)}
+\item{annot}{Look up the titles and characteristics for GSMs (DEFAULT: FALSE)}
 
-\item{HDF5}{EXPERIMENTAL: make the grSet HDF5-backed? (FALSE)}
+\item{HDF5}{EXPERIMENTAL: make the grSet HDF5-backed? (DEFAULT: FALSE)}
 
-\item{cachePath}{where to cache the GEOmetadb sqlite file (tempdir())}
+\item{cachePath}{Where to cache the GEOmetadb sqlite file (DEFAULT: tempdir)}
 
-\item{force}{Parse IDAT files with different array size, see the man page ?read.metharray (FALSE)}
+\item{rightType}{"Correct" array type, tries to guess is NULL (DEFAULT: NULL)}
 
-\item{check.frags}{check if frags covers all elements up to "idat.gz" (FALSE)}
+\item{force}{Parse IDAT files with different array size,
+see the man page ?read.metharray (DEFAULT: FALSE)}
 
-\item{...}{more arguments to pass on to sesamize}
+\item{check.frags}{Check if frags covers all elements up to "idat.gz"
+(DEFAULT: FALSE)}
+
+\item{...}{More arguments to pass on to sesamize}
 }
 \value{
-\preformatted{       a GenomicRatioSet with metadata(grSet)$SNPs filled out
-}
+GenomicRatioSet with metadata(grSet)$SNPs filled out
 }
 \description{
 This function processes a directory full of IDATs, somewhat sensibly.
