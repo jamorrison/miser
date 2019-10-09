@@ -31,21 +31,17 @@ addAnnotations <- function(x,
         pheno <- subset(pheno, rownames(pheno) %in% GSMs)
     }
 
-    toParse <- pheno[, grep("characteristics_ch1*", names(pheno))]
+    toParse <- pheno[, grep("*:ch1", names(pheno)), drop = FALSE]
     rownames(toParse) <- GSMs
-
-    parsed <- sapply(toParse,
-                     function(x) elts(as.character(x), sep=": ", elt=2))
-    parsed <- as.data.frame(parsed)
-    rownames(parsed) <- GSMs
-    colnames(parsed) <- sapply(toParse,
-                               function(x) elts(as.character(x[[1]]), sep=":"))
-    parsed[] <- lapply(parsed, as.factor)
-    parsed$title <- as.character(pheno$title)
-    parsed$gsm <- GSMs
+    colnames(toParse) <- elts(colnames(toParse), sep=":", elt=1)
+    toParse[] <- lapply(toParse, as.factor)
+    toParse$title <- as.character(pheno$title)
+    toParse$gsm <- GSMs
 
     if (is(x, "GenomicRatioSet")) {
-        for (i in names(parsed)) colData(x)[, i] <- parsed[, i]
+        colnames(x) <- toParse$title
+        colnames(metadata(x)$SNPs) <- colnames(x)
+        for (i in names(toParse)) colData(x)[, i] <- toParse[, i]
         for (i in 1:length(colData(x))) {
             if (class(colData(x)[[i]]) == "factor") {
                 names(colData(x)[[i]]) <- colData(x)$gsm
@@ -53,6 +49,6 @@ addAnnotations <- function(x,
         }
         return(x)
     } else {
-        return(parsed)
+        return(toParse)
     }
 }
