@@ -1,16 +1,18 @@
-#' make sure annotations and so forth are in place before doing a big run...
-#' 
-#' @param   samps   two or more rows of the `samps` data.frame with `Basename`
-#' @param   ...     other arguments, currently unused 
+#' Make sure annotations and so forth are in place before doing a big run...
 #'
-#' @return          the status of an attempt to annotate those IDATs 
-#' 
-#' @import  minfi
-#' 
+#' @param samps Two or more rows of the `samps` data.frame with `Basename`
+#' @param ... Other arguments to be passed to readMethArrays
+#'
+#' @return Boolean of if sesamize finished successfully
+#'
+#' @examples
+#'
 #' @export
-testIDATs <- function(samps, ...) { 
-  rgSet <- read.metharray.exp(base=".", targets=samps[1:2,])
-  colnames(rgSet) <- rgSet$subject
-  res <- sesamize(rgSet)
-  is(res, "GenomicRatioSet")
-} 
+#'
+testIDATs <- function(samps,
+                      ...) {
+    rgSet <- readMethArrays(base = ".", targets = samps[1:2, ], ...)
+    colnames(rgSet) <- rgSet$subject
+    res <- sesamize(rgSet)
+    is(res, "GenomicRatioSet")
+}

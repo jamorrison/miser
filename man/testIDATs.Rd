@@ -2,19 +2,21 @@
 % Please edit documentation in R/testIDATs.R
 \name{testIDATs}
 \alias{testIDATs}
-\title{make sure annotations and so forth are in place before doing a big run...}
+\title{Make sure annotations and so forth are in place before doing a big run...}
 \usage{
 testIDATs(samps, ...)
 }
 \arguments{
-\item{samps}{two or more rows of the \code{samps} data.frame with \code{Basename}}
+\item{samps}{Two or more rows of the \code{samps} data.frame with \code{Basename}}
 
-\item{...}{other arguments, currently unused}
+\item{...}{Other arguments to be passed to readMethArrays}
 }
 \value{
-\preformatted{     the status of an attempt to annotate those IDATs 
-}
+Boolean of if sesamize finished successfully
 }
 \description{
-make sure annotations and so forth are in place before doing a big run...
+Make sure annotations and so forth are in place before doing a big run...
+}
+\examples{
+
 }
