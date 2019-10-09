@@ -51,10 +51,10 @@ sesamizeGEO <- function(subjects,
     } else { 
         samps <- getSamps(subjects=subjects, frags=frags,
                           check.frags=check.frags)
-        samps[,1] <- as.character(samps[,1])
-        samps[,2] <- as.character(samps[,2])
         message("Testing annotations on the first few IDATs...") 
-        stopifnot(testIDATs(samps, frags)) 
+        if (nrow(samps) > 2) {
+            stopifnot(testIDATs(samps, rightType = rightType, force = force)) 
+        }
         message("Reading IDATs into a temporary RedGreenChannelSet...") 
         rgSet <- getRGChannelSet(subjects=subjects, frags=frags, samps=samps,
                                  rightType = rightType, force=force)
