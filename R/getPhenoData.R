@@ -17,10 +17,10 @@ getPhenoData <- function(series,
                          gse,
                          gpl) {
     
-    if (substr(gse) != "GSE") {
+    if (substr(gse, start = 1, stop = 3) != "GSE") {
         gse <- paste0("GSE", gse)
     }
-    if (substr(gpl) != "GPL") {
+    if (substr(gpl, start = 1, stop = 3) != "GPL") {
         gpl <- paste0("GPL", gpl)
     }
 
