@@ -99,6 +99,8 @@ readMethArrays <- function(base,
 
         G.Quants <- subset(G.Quants, arrayTypes == rightType)
         R.Quants <- subset(R.Quants, arrayTypes == rightType)
+        arrayTypes <- as.data.frame(arrayTypes, stringsAsFactors = FALSE)
+        arrayTypes <- arrayTypes[arrayTypes$array == rightType, ]
     }
     if (!sameLength && sameArray && !force) {
         stop("[readMethArrays] Trying to parse IDAT files with different ",
