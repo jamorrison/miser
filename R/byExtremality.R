@@ -16,7 +16,7 @@
 #' 
 #' @return    the most extremal _k_ rows of _x_ (returns the same class as _x_)
 #' 
-#' @import    matrixStats
+# @import    matrixStats
 #' @import    DelayedMatrixStats
 #' 
 #' @export
