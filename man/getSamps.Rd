@@ -2,21 +2,23 @@
 % Please edit documentation in R/getSamps.R
 \name{getSamps}
 \alias{getSamps}
-\title{helper function to read in samples and Basename columns}
+\title{Helper function to read in subjects (samples) and Basename columns}
 \usage{
-getSamps(subjects = NULL, frags = 1:3, check.frags = FALSE)
+getSamps(subjects = NULL, frags = 1:3, check.frags = TRUE)
 }
 \arguments{
-\item{subjects}{the names of each subject, or NULL to autodetect (NULL)}
+\item{subjects}{The names of each subject, will autodetect if NULL
+(DEFAULT: NULL)}
 
-\item{frags}{which elements to extract for the array Basename (1:3)}
+\item{frags}{Which elements to extract for the array Basename, ignored if
+\code{check.frags} = TRUE (DEFAULT: 1:3)}
 
-\item{check.frags}{check if frags covers all elements up to "idat.gz" (FALSE)}
+\item{check.frags}{Check if frags covers all elements up to "idat.gz"
+(DEFAULT: TRUE)}
 }
 \value{
-\preformatted{       a data.frame
-}
+A data.frame with Basename and subject columns
 }
 \description{
-helper function to read in samples and Basename columns
+Helper function to read in subjects (samples) and Basename columns
 }

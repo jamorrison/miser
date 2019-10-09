@@ -1,31 +1,40 @@
-#' helper function to read in samples and Basename columns
+#' Helper function to read in subjects (samples) and Basename columns
 #' 
-#' @param   subjects     the names of each subject, or NULL to autodetect (NULL)
-#' @param   frags        which elements to extract for the array Basename (1:3)
-#' @param   check.frags  check if frags covers all elements up to "idat.gz" (FALSE)
+#' @param subjects The names of each subject, will autodetect if NULL
+#' (DEFAULT: NULL)
+#' @param frags Which elements to extract for the array Basename, ignored if
+#' `check.frags` = TRUE (DEFAULT: 1:3)
+#' @param check.frags Check if frags covers all elements up to "idat.gz"
+#' (DEFAULT: TRUE)
 #' 
-#' @return            a data.frame
+#' @return A data.frame with Basename and subject columns
 #' 
 #' @export 
-getSamps <- function(subjects=NULL, frags=1:3, check.frags=FALSE) { 
-  # short circuit all of this if the subjects are a list of IDATs:
-  if (all(grepl("idat", ignore.case=TRUE, subjects))) { 
-    # list of IDATS
-    if (check.frags) { # find last element before "idat.gz"
-      idx <- sapply(strsplit(subjects,"_",fixed=TRUE), function(x) grep("idat.gz$",x))
-      stopifnot(all(abs(idx - mean(idx)) < 10^5)) # check all entries have the same number of elements
-      frags <- 1:(idx[1]-1) #idx is the index with "idat.gz" in it, want to stop at element before this
-    }
-    samps <- data.frame(Basename=unique(elts(subjects, elt=frags)),
-                        subject=unique(elts(subjects)))
-  } else { 
-    basenames <- unique(elts(list.files(patt="*idat*"), elt=frags))
-    samps <- data.frame(Basename=basenames)
-    if (is.null(subjects)) {
-      samps$subject <- elts(samps$Basename)
+getSamps <- function(subjects=NULL, frags=1:3, check.frags=TRUE) { 
+    # short circuit all of this if the subjects are a list of IDATs:
+    if (all(grepl("idat", ignore.case=TRUE, subjects))) { 
+        # list of IDATS
+        if (check.frags) { # find last element before "idat.gz"
+            subjects <- sub("_Grn.idat.gz", "", subjects)
+            subjects <- sub("_Red.idat.gz", "", subjects)
+            samps <- data.frame(Basename = unique(subjects),
+                                subject = unique(elts(subjects)),
+                                stringsAsFactors = FALSE)
+            return(samps)
+        } else {
+            samps <- data.frame(Basename=unique(elts(subjects, elt=frags)),
+                                subject=unique(elts(subjects)),
+                                stringsAsFactors = FALSE)
+            return(samps)
+        }
     } else { 
-      stopifnot(identical(names(subjects), samps$Basename))
+        basenames <- unique(elts(list.files(patt="*idat*"), elt=frags))
+        samps <- data.frame(Basename=basenames, stringsAsFactors = FALSE)
+        if (is.null(subjects)) {
+            samps$subject <- elts(samps$Basename)
+        } else { 
+            stopifnot(identical(names(subjects), samps$Basename))
+        }
+        return(samps)
     }
-  }
-  return(samps)
 }
